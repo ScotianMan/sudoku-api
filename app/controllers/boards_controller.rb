@@ -6,7 +6,7 @@ end
 
 private
 
-def check_board(board)
-  # TODO: Implement checking of board
+def check_board(board_values)
+  board = Board.build_board_from_array(board_values)
   false
 end
