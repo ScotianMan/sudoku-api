@@ -26,18 +26,6 @@ RSpec.describe 'Sudoku API', type: :request do
     [ 1, 8, 9, 3, 4, 6, 5, 7, 2 ],
     [ 6, 7, 2, 5, 1, 9, 8, 3, 4 ]
   ]
-  # good_values.each_with_index do |row_array, row_index|
-  #   row_array.each_with_index do |value, column_index|
-  #     Square.create(
-  #       board: default_board,
-  #       value: value,
-  #       row: row_index,
-  #       column: column_index,
-  #       block: ((row_index / 3) * 3) + (column_index / 3)
-  #     )
-  #   end
-  # end
-
 
   # Tests for a valid board
   describe 'POST /is_valid' do
