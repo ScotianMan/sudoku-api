@@ -45,7 +45,6 @@ RSpec.describe 'Sudoku API', type: :request do
     let(:bad_board_attributes) { { board: bad_values } }
 
     context 'when the request is valid' do
-      before { post '/is_valid', params: attributes }
 
       it 'returns is_valid true when board is valid' do
         post '/is_valid', params: good_board_attributes
