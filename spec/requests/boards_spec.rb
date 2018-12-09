@@ -26,5 +26,18 @@ RSpec.describe 'Sudoku API', type: :request do
         expect(response).to have_http_status(200)
       end
     end
+
+    context 'when the request is NOT valid' do
+      before { post '/is_valid', params: { board: invalid_solved_incorrect_board } }
+
+      it 'returns status code 422' do
+        expect(response).to have_http_status(422)
+      end
+
+      it 'returns a validation failure message' do
+        expect(response.body)
+          .to match(/Validation failed: Value must be greater than 0/)
+      end
+    end
   end
 end
