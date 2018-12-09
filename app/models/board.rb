@@ -12,9 +12,9 @@ class Board < ApplicationRecord
     sliced_board = board_values.each_slice(board.size).to_a
     sliced_board.each_with_index do |row, row_index|
       row.each_with_index do |square, column_index|
-        block = column_index / block_size + row_index - row_index % 3
+        block = column_index / block_size + row_index - row_index % block_size
         Square.create!(
-          value: square,
+          value: square.to_i,
           row: row_index,
           column: column_index,
           block: block.to_i,
@@ -23,5 +23,16 @@ class Board < ApplicationRecord
       end
     end
     board
+  end
+
+  # sym should be one of the following symbols [:row, :column, :block]
+  def group_valid?(sym)
+    grouped_syms = self.squares.group_by(&sym).values
+    sum_truths = []
+    grouped_syms.each do |group|
+      sum_truths.push(group.map{|square| square.value}.sum == (0..self.size).sum)
+    end
+
+    sum_truths.all?
   end
 end
