@@ -3,7 +3,11 @@ class Board < ApplicationRecord
   has_many :squares, dependent: :destroy
 
   # validations
-  validates :size, numericality: { only_integer: true }
+  # until further features added the size of the board is fixed to 9 although
+  # any perfect square could be used
+  validates :size, numericality: { only_integer: true, equal_to: 9 }
+
+  # class methods
 
   def self.build_board_from_array(board_values)
     board = Board.create!
@@ -25,7 +29,9 @@ class Board < ApplicationRecord
     board
   end
 
-  # sym should be one of the following symbols [:row, :column, :block]
+  # instance methods
+  
+  # sym should be one of the following symbols of a Square [:row, :column, :block]
   def group_valid?(sym)
     grouped_syms = self.squares.group_by(&sym).values
     sum_truths = []
