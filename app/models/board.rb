@@ -10,6 +10,9 @@ class Board < ApplicationRecord
   # class methods
 
   def self.build_board_from_array(board_values)
+    unless board_values.is_a?(Array)
+      raise ArgumentError.new("board_values must be an array")
+    end
     board = Board.create!
     block_size = Math.sqrt(board.size)
     # Rails doesnt handle 2d array params, I convert to allow clearer indexing

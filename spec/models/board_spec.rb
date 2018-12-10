@@ -13,6 +13,16 @@ RSpec.describe Board, type: :model do
     let(:good_board_attributes) { valid_solved_correct_board }
     let(:invalid_board_attributes) { invalid_solved_incorrect_board }
 
+    context 'when called with invalid argument' do
+      
+      it 'raises ArgumentError' do 
+        expect {
+          Board.build_board_from_array("Definitely not an array :-P")
+        }.to raise_error(ArgumentError)
+      end
+      
+    end
+
     context 'when the board passed has valid values' do
 
       it 'creates the board' do
@@ -50,7 +60,7 @@ RSpec.describe Board, type: :model do
           good_board.group_valid?(:created_at)
         }.to raise_error(ArgumentError)
       end
-      
+
     end
 
     context 'when called with :row, :column or :block' do
