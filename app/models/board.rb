@@ -10,10 +10,10 @@ class Board < ApplicationRecord
   # class methods
 
   def self.build_board_from_array(board_values)
-    unless board_values.is_a?(Array)
-      raise ArgumentError.new("board_values must be an array")
-    end
     board = Board.create!
+    unless board_values.is_a?(Array) && board_values.count == (board.size ** 2)
+      raise ArgumentError.new("board_values must be an Int [1-9] array and #{board.size ** 2} in length")
+    end
     block_size = Math.sqrt(board.size)
     # Rails doesnt handle 2d array params, I convert to allow clearer indexing
     sliced_board = board_values.each_slice(board.size).to_a
