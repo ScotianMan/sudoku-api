@@ -33,6 +33,9 @@ class Board < ApplicationRecord
   
   # sym should be one of the following symbols of a Square [:row, :column, :block]
   def group_valid?(sym)
+    unless [ :row, :column, :block].include?(sym)
+      raise ArgumentError.new("group_valid can only be called :row, :column or :block")
+    end
     grouped_syms = self.squares.group_by(&sym).values
     sum_truths = []
     grouped_syms.each do |group|

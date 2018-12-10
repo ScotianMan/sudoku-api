@@ -38,9 +38,20 @@ RSpec.describe Board, type: :model do
   end
 
   describe '#group_valid?' do
+    # FactoryBot is installed and this should be refactored after FactoryBot can build boards
     let(:good_board) { Board.build_board_from_array(valid_solved_correct_board) }
     let(:bad_board) { Board.build_board_from_array(valid_solved_incorrect_board) }
     let(:dupe_board) { Board.build_board_from_array(valid_solved_dupe_board) }
+
+    context 'when called with invalid symbol' do
+      
+      it 'raises ArgumentError' do 
+        expect {
+          good_board.group_valid?(:created_at)
+        }.to raise_error(ArgumentError)
+      end
+      
+    end
 
     context 'when called with :row, :column or :block' do
 
