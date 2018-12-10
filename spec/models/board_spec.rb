@@ -15,12 +15,17 @@ RSpec.describe Board, type: :model do
 
     context 'when called with invalid argument' do
       
-      it 'raises ArgumentError' do 
+      it 'raises ArgumentError when an array is not passed' do 
         expect {
           Board.build_board_from_array("Definitely not an array :-P")
         }.to raise_error(ArgumentError)
       end
-      
+
+      it 'raises ArgumentError when an array is not of proper size/format' do 
+        expect {
+          Board.build_board_from_array([[1,2,3,4,5]])
+        }.to raise_error(ArgumentError)
+      end
     end
 
     context 'when the board passed has valid values' do
