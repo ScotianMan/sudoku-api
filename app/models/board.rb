@@ -12,7 +12,7 @@ class Board < ApplicationRecord
   def self.build_board_from_array(board_values)
     board = Board.create!
     block_size = Math.sqrt(board.size)
-    # Rails doesnt handle 2d array params, I convert to allow easier indexing
+    # Rails doesnt handle 2d array params, I convert to allow clearer indexing
     sliced_board = board_values.each_slice(board.size).to_a
     sliced_board.each_with_index do |row, row_index|
       row.each_with_index do |square, column_index|
@@ -36,7 +36,10 @@ class Board < ApplicationRecord
     grouped_syms = self.squares.group_by(&sym).values
     sum_truths = []
     grouped_syms.each do |group|
-      sum_truths.push(group.map{|square| square.value}.sum == (0..self.size).sum)
+      values = group.map{|square| square.value}
+      good_sum = values.sum == (0..self.size).sum
+      no_dupes = values.uniq == values
+      sum_truths.push(good_sum && no_dupes)
     end
 
     sum_truths.all?
